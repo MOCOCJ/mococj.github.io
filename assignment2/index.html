@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Concrete Architecture - MOCOCJ</title>
+        <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap-3.0.3.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="..">MOCOCJ</a>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li >
+                                <a href="..">Home</a>
+                            </li>
+                            <li >
+                                <a href="../assignment0/">Chrome Resources</a>
+                            </li>
+                            <li >
+                                <a href="../assignment1/">Conceptual Architecture</a>
+                            </li>
+                            <li class="active">
+                                <a href="./">Concrete Architecture</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li >
+                                <a rel="next" href="../assignment1/">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="disabled">
+                                <a rel="prev" >
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#concrete-architecture-report">Concrete Architecture Report</a></li>
+            <li><a href="#abstract">Abstract</a></li>
+            <li><a href="#introduction">Introduction</a></li>
+            <li><a href="#derivation">Derivation</a></li>
+            <li><a href="#concrete-architecture">Concrete Architecture</a></li>
+            <li><a href="#use-cases">Use Cases</a></li>
+            <li><a href="#new-feature-proposal-reader-mode">New Feature Proposal: Reader Mode</a></li>
+            <li><a href="#team-issues">Team Issues</a></li>
+            <li><a href="#lessons-learned">Lessons Learned</a></li>
+            <li><a href="#conclusion">Conclusion</a></li>
+            <li><a href="#references">References</a></li>
+            <li><a href="#glossary">Glossary</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h1 id="concrete-architecture-report">Concrete Architecture Report</h1>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>This report looks at the how our individual research, use of <code>README</code>s and documentation, and the use of the Understand tool helped in the derivation of our group’s concrete architecture of the Chromium web browser. Through this report we will give a detailed description of each of the subsystems that are a part of the Chromium web browser as well as their functions. We will also do a reflexion analysis due to the differences of our initial conceptual architecture and our concrete architecture. To better demonstrate our understanding of the inner workings of the Chromium web browser, this report will also exhibit two use cases and their corresponding sequences. Finally, we will take a look at a potential new feature as well as some of Chromium team issues and the lessons learned by our own team.  </p>
+<h2 id="introduction">Introduction</h2>
+<p>Chromium was first introduced by Google in 2008 as a free and open-source web browser. It used modern features and had a focus on the four S’s: speed, stability, safety, and simplicity. Throughout Chromium’s ten years of life, it has proven to be a huge competitor in the browser industry. The most important aspect of its lifetime is the ongoing development that has kept the browser up to date with many useful features, changes, and adaptations. One of most revolutionary features of the Chromium web browser is its multi-process architecture. Such an architecture allows different tabs/windows to be run in parallel but unique processes. Before Google’s Chromium project, the majority of other web browsers bore single-process architectures. As a result of its outstanding features and revolutionary architecture, the Chromium web browser has become the number one browser in the world.  </p>
+<p>The main purpose of this report is to give a thorough review of the as-built, or concrete, architecture of the Chromium web browser. The findings of this report are based off the individual research of each member of team MOCO and the team’s collaborative discussions of said individual research. We will, firstly, go over the process of deriving our concrete architecture. This will include what individual work that was done and the tools used to examine the Chromium source code. Secondly, the report will give a concise overview of the concrete architecture that Team MOCO settled upon based on the derivation. the overview will also briefly examine any discrepancies between Team MOCO’s conceptual architecture from <a href="/assignment1">Assignment 1</a> and the team’s concrete architecture that was  developed for this assignment. We will also give a description of all the major subsystems and their corresponding functions. From all the subsystems, the report will delve more deeply into two of the subsystems, the <em>XML Parser</em> and <em>Browser</em>, by analyzing their own architecture. Thirdly, this report will do a reflexion analysis in order to compare any additions, changes, and differences between Team MOCO’s conceptual and concrete architecture. Subsequently, the report will reflect Team MOCO’s deeper understanding of the Chromium source code through the use of two use cases and their corresponding sequence diagrams. The sequence diagrams will exhibit explicit function calls found from the source code. Additionally, this report will present a potential new feature for the Chromium web browser, reader mode. To conclude, this report will go over any team issues that were faced by the Chromium team and any lessons learned by Team MOCO during the duration of this assignment.  </p>
+<h2 id="derivation">Derivation</h2>
+<p>The concrete architecture discussed in this report is derived using the given source code folder of the Chromium browser found on the CISC322 website, as well as the Chromium source code guide found on Chromium’s website.  </p>
+<p>To begin the process of deriving the concrete architecture, we first ensured that all team members were able to successfully operate the Understand tool as well as open the given Understand project file found in the given Chromium source code. In this stage, many of us ran into initial problems extracting the code from the pre-packaged zip file on Windows, as Windows would extract only portions of the zip file with its built in zip extractor. This issue was quickly resolved through the use of a third party zip program.  </p>
+<p>Once we ensured that everyone was able to access the source code within the tool, we assigned components from our conceptual architecture to each team member for them to focus on and map source code directories to. As we initially had problems knowing where to look and what to look for, we turned to the various <code>README</code>s found in the source directories for direction. This allowed us to map some of the directories to their respective architecture component quite accurately; for example, it was initially thought that the top-level directory <code>ui/</code> would belong to the <em>UI</em> component of the architecture. However, when looking at the description found in the <code>README</code> for that directory, it was discovered that the directory was actually one of various UI frameworks. This allowed us to deduce that the <code>ui/</code> directory was supposed to be mapped to the <em>Display Backend</em> component instead.  </p>
+<p>However, there were also many directories which did not contain a <code>README</code>. We turned towards the Chromium documentation for more information, from which we found a site with high level descriptions of each directory. The site also contained descriptions for the many subdirectories of the <code>chrome/</code> and <code>content/</code> folders. This allowed us to continue mapping the various directories to their respective components.  </p>
+<p>As we mapped the directories, it became apparent that some components, such as <em>XML Parser</em>, did not have their own directory; rather, it was a collection of individual files. In order to find such files, we were forced to do a search for such components relying on specific keywords in the file names, code comments, or the code itself. For example, in the case of <em>XML Parser</em>, we looked for its files using keywords like <code>xml</code>. This allowed us to ensure that each component contained directories or files that were attributed to it.</p>
+<p>Once each individual of the team had confidence that they had done what they could to map the directories to their assigned component, we came together again to consolidate our findings. We worked out the differences and conflicts in our respective mappings and merged all the mappings together, generating our concrete architecture.  </p>
+<p><em>Figure 1: Architecture dependency graph</em>
+<img alt="Fig1" src="../img/a2/fig1.png" /></p>
+<p><em>Figure 2: Concrete Architecture of Chrome</em>
+<img alt="Fig2" src="../img/a2/fig2.png" /></p>
+<h2 id="concrete-architecture">Concrete Architecture</h2>
+<h3 id="overview">Overview</h3>
+<p>The concrete architecture that was generated by our source code mappings to each component in our conceptual architecture by the Understand tool is object oriented. This differs from our conceptual architecture in that it loses the layered style that our conceptual architecture initially had. Because our concrete architecture is object oriented, it retains many of the advantages of the object oriented style, such as how the implementation details of each component/subsystem is hidden from the others. We also did not find a need to add any new components that weren’t already existing in our conceptual architecture to our concrete architecture.  </p>
+<p>The concrete architecture did differ from the conceptual architecture in that there were many additional unexpected dependencies as a result of changing from a layered architecture style to a object-oriented architectural style. This is where the differences became much more notable; the concrete architecture was much more coupled than the conceptual architecture. These included one way dependencies that did not exist between components previously in the conceptual architecture, as well as new interdependencies between components. The details of such unexpected dependencies will be analysed later in the report.  </p>
+<p><em>Figure 3: Concrete architecture with marked unexpected dependencies</em>
+<img alt="Fig3" src="../img/a2/fig3.png" /></p>
+<h3 id="subsystems">Subsystems</h3>
+<p>The following offers a brief and high level overview of the functionality of the included subsystems.  </p>
+<h4 id="user-interface">User Interface</h4>
+<p>The <em>User Interface (UI)</em> is responsible for displaying what the user sees and interacts with. As mentioned in the previous report, the <em>User Interface</em> is divided into two areas, the content area and the non-content area. The content area contains the actual web page being displayed to the user while the non-content area contains the various menus, widgets, and layout of the actual Chromium browser. Together, they provide an area for the user to interact with  </p>
+<p><em>Figure 4: UI-focused dependency graph</em>
+<img alt="Fig4" src="../img/a2/fig4.png" /></p>
+<h4 id="browser">Browser</h4>
+<p>The <em>browser</em> is a multiprocessor system that manages most of the other subsystems, and can be thought of as a central control hub of Chromium. As a result of this, the <em>browser</em> manages the renderer and allows for the concurrency of each instance of the render object. In essence it separates and individualizes all instances of the render object from one another.  </p>
+<h4 id="renderer">Renderer</h4>
+<p>As the main new big feature of Chrome, the <em>renderer</em> is often seen as the most important part. Each instance of the renderer runs independent of the others, giving each their own sandbox, essentially allowing them to play in their own space, but not allowing them to mix. This keeps information safe from other tabs and if something goes wrong in one, the others will remain saved.  </p>
+<p><em>Figure 5: Renderer-focused dependency graph</em>
+<img alt="Fig5" src="../img/a2/fig5.png" /></p>
+<h4 id="networking-stack">Networking Stack</h4>
+<p>The <em>network stack</em> is responsible for communicating with servers over the air to send and retrieve the information required to load pages. Most of its source files are found within the <code>net/</code> and <code>sql/</code> directories, although there are other files found in the <code>services/</code> directory as well. The <em>network stack</em> handles various tasks that need to be communicated over a network, including communication with remote servers, network printing, and file transfers over a network.  </p>
+<h4 id="display-backend">Display Backend</h4>
+<p>The <em>display backend</em> is a component that supplies the renderer and UI with the necessary tools to draw and display elements. Fundamental to Chromium, the <em>display backend</em> works with the GPU to provide low-level access to graphics capabilities. The various UI frameworks are stored in the root level directory <code>ui/</code> and uses various graphics libraries that were not found in our analysis, most notable Skia and GDI.  </p>
+<h4 id="javascript-interpreter">Javascript Interpreter</h4>
+<p>The JavaScript Interpreter for Chrome was designed in house by Google specifically for the Chrome browser. Chrome V8, as it is called, works by taking javascript files and translating them to help run web pages. V8 is much faster than previous Interpreters, due to the V8 translating javascript directly into native assembly, instead of first compiling the code to bytecode and then repeating bytecode to assembly. Google released V8 as an open source project, allowing anyone to develop their own personal projects with it. V8 is located almost exclusively in the <code>gin/</code> folder.  </p>
+<p><em>Figure 6: Javascript interpreter internal dependencies</em>
+<img alt="Fig6" src="../img/a2/fig6.png" /></p>
+<p><em>Figure 7: Javascript interpreter-focused dependency graph</em>
+<img alt="Fig7" src="../img/a2/fig7.png" /></p>
+<h4 id="xml-parser">XML Parser</h4>
+<p>The <em>Parser</em> handles XML files so that the browser can then understand and use the information. Chromium uses the libXML parser library, which can be found within its source code. The <em>XML Parser</em> is needed in order to convert text into a XML DOM object, which contains the properties and methods needed to access and modify XML code.  </p>
+<h3 id="reflexion-analysis">Reflexion Analysis</h3>
+<h4 id="browser-network">Browser ↔ Network</h4>
+<p>When comparing Team MOCO’s original conceptual architecture to the new concrete architecture, there is an unexpected interdependency between the <em>browser</em> component and the <em>network stack</em>. The <em>network stack</em> depends on the <em>browser</em> for network-related crashes. In order for it to properly log errors and crashes, the <em>network</em> needs to access to the required functions from the <em>browser</em>.  </p>
+<h4 id="browser-display-backend">Browser ↔ Display Backend</h4>
+<p>In our conceptual architecture there was no link between the <em>browser</em> and <em>display backend</em> at all. The concrete architecture shows that these two components depend on each other. The <em>browser</em> requires the <em>display backend</em> to render certain graphics. On the other side, the <em>display backend</em> requires the <em>browser</em> to format URLs.  </p>
+<h4 id="renderer-network">Renderer ↔ Network</h4>
+<p>The <em>network</em>’s unexpected dependency on the <em>renderer</em> seems to stem from the need for wireless printing operations. It is a small feature that’s often overlooked, so a plan may not have been made for this feature. The likely reason for it is that someone just quickly added this feature without much planning. The <em>renderer</em>’s dependance on the <em>network</em> comes from its need for some resources related to SSL channel IDs and URL requests in the process of rendering browser context.  </p>
+<h4 id="display-renderer">Display → Renderer</h4>
+<p>The <em>display backend</em> depends on the <em>renderer</em> for some animations and compositing utilities.  </p>
+<h4 id="ui-network">UI → Network</h4>
+<p>The <em>UI</em> depends on <em>Network</em> for MIME and URL utilities, as well as networking errors so they can be reported.  </p>
+<h4 id="ui-renderer">UI → Renderer</h4>
+<p>Ideally the <em>UI</em> would not need to depend on the <em>renderer</em> for graphics, but some <em>renderer</em> files in the concrete architecture are required for the <em>UI</em> to display its elements. This is likely the result of some quick changes where the developer was not focused on writing good code.  </p>
+<h3 id="analysed-subsystems">Analysed Subsystems</h3>
+<h4 id="browser_1">Browser</h4>
+<p>The <em>browser</em> subsystem is the core of the Chromium architecture. A multi-process control hub, the browser manages the concurrency of sandboxed renderer instances through IPC connections. Essentially, the browser – or sometimes the “browser process” – is the main Chromium process that manages the individual tab and plugin processes, as well as running the <em>UI</em>. Each tab in turn has its own render process using the Blink rendering engine.  </p>
+<p><em>Figure 8: Multi-process architecture overview from Chromium developer documentation</em>
+<img alt="Fig8" src="../img/a2/fig8.png" /></p>
+<p>The figure above is the Chromium documentation diagram for how the multi-renderer concurrency is managed by the browser object via IPC.  </p>
+<p><em>Figure 9: Browser-focused dependency graph</em>
+<img alt="Fig9" src="../img/a2/fig9.png" /></p>
+<p>If the dependencies of the browser subsystem are focused on, it is clear to see how central it is to the operation of the system as a whole. This is a result of it being the key component to Chromium’s operation, directing and managing processes and operations from every other subsystem, as well as containing common operational elements. As such, every other subsystem heavily depends on it.  </p>
+<p><em>Figure 10: Browser internal architecture split into subsystems</em>
+<img alt="Fig10" src="../img/a2/fig10.png" /></p>
+<p>Internally, the browser can be split into four base components. The Base consists of all the base browser classes and functionality. Shared contains many common elements that are used by the browser as well as some other subsystems. Storage is the browser’s internal local storage system, including data persistence, download storage, file loading, caching, etc. Finally, IPC is what directly manages the control of tab render processes.  </p>
+<p><em>Figure 11: Browser internal architecture showing directories in each subsystem</em>
+<img alt="Fig11" src="../img/a2/fig11.png" /></p>
+<h4 id="xml-parser-libxml2">XML Parser (libxml2)</h4>
+<p>The <em>XML parser</em> that Google Chrome uses is the libxml2 parser. It takes in an XML input file and will parse the information and then execute commands based on the files contents. It uses the <code>libxml_utils</code> file for the main connection to the libxml2 library. It is located within the <code>third_party/</code> directory and all the main classes within the chromium directories that use XML files will access either this file or the <code>xml_parser</code> header or class file. The dependencies between <code>libxml_utils</code> and the other files can be seen in <em>figure 12</em>, with the <code>xml_parser.cc</code> class highlighted because of its importance to xml reading in chromium, which will be explained below. This graph shows how other parts of the application access the xml parser via <code>libxml_utils</code>. The <code>xml_parser</code> class is an important one because it is the class that many other classes use to parse XML files. This class access the libxml_utils class and will parse the inputted file from elsewhere in chromium. This file is able to parse the files that are inputted to it by accessing many other parts of the chromium architecture, which is shown in <em>figure 13</em>. The reason that it accesses all these other parts of the code, is so that it can successfully handle the different types of inputs that will arise from using the xml parse. Other classes are able to access this code by importing the <code>xml_parser.h</code> file, which in turn will obviously be imported by the <code>.cc</code> file that was just talked about. This is the architecture and interactions of the <code>xml_parser.h</code> and <code>.cc</code> files. One of the main files that will acced the <code>xml_parser.h</code> file is the <code>data_decoder_service.cc</code> file which handels a lot of XMl files from all over chromium, so it makes sense that such an important XML/data reader would require the immediate access to the libxml2 XML parser.  </p>
+<p><em>Figure 12: XML parser file dependencies on <code>libxml_utils.h</code></em>
+<img alt="Fig12" src="../img/a2/fig12.png" /></p>
+<p><em>Figure 13: File dependencies of <code>xml_parser.cc</code></em>
+<img alt="Fig13" src="../img/a2/fig13.png" /></p>
+<p><em>Figure 14: File dependencies of <code>xml_parser.h</code></em>
+<img alt="Fig14" src="../img/a2/fig14.png" /></p>
+<p><em>Figure 15: XML parser-focused dependency graph</em>
+<img alt="Fig15" src="../img/a2/fig15.png" /></p>
+<h2 id="use-cases">Use Cases</h2>
+<h3 id="storing-a-password-on-successful-login">Storing a Password on Successful Login</h3>
+<p><em>Figure 16: Storing a password on successful login sequence diagram</em>
+<img alt="Fig16" src="../img/a2/fig16.png" /></p>
+<p>The sequence diagram above outlines the process as well as the specific function calls made by Chromium in the case of a password being stored after a successful login into some website. The first step of this process would be for the user to interact with the <em>User Interface</em> and enter the relevant credentials (including the/a password). Next, Chromium would call upon the <code>HttpConnection()</code> function in order to submit and load the URL to the <em>Network Stack</em>. The <em>network stack</em> will then get validation from the site server. Once complete, the <em>browser</em> retrieves the page info from the <em>network stack</em>. The page is rendered with <code>RenderFrame()</code> and then the <em>UI</em> prompts the user to save or update the password. Upon confirmation, the credentials are stored in data persistence.  </p>
+<h3 id="rendering-a-webpage-with-javascript">Rendering a Webpage with Javascript</h3>
+<p><em>Figure 17: Rendering a webpage with Javascript sequence diagram</em>
+<img alt="Fig17" src="../img/a2/fig17.png" /></p>
+<p>This sequence diagram shows how a webpage with JavaScript would be loaded and rendered. It starts with the user launching a new URL through the <em>UI</em> and the <em>network stack</em> establishing a connection with the server and receiving validation. The <em>browser</em> will get the page information from the <em>network</em> and V8 (the <em>JavaScript parser</em>) will get the JavaScript files and return the relevant information to the <em>browser</em>. Once everything is finished, the <em>renderer</em> will use the data to render the page.  </p>
+<h2 id="new-feature-proposal-reader-mode">New Feature Proposal: Reader Mode</h2>
+<p>For our new feature, we are suggesting a built-in reader mode for Chromium. This is a feature that is standard across many web browsers in 2018 and we think Chromium should adopt this helpful feature as well. This feature will be completely optional and the user can simply press a button or use a keyboard shortcut to convert a page into the reader mode. It will be very simple and user friendly.  </p>
+<p>The new reader mode will simplify a page to make the format easier to read. It will clean the page by removing many unnecessary elements like ads. The user will be able to customize some elements to increase legibility, such as the font, colours, and text size. Many basic features of the web page will remain, like the links and images.  </p>
+<p>To implement this feature we will need to modify both the <em>UI</em> and <em>renderer</em> components of the Chromium architecture. The <em>UI</em> will be needed to allow the user to easily swap in and out of reader mode so that they may use the feature when they like. The user will also need a way to adjust the settings of reader mode to make the web page perfect for their needs. The settings will also be a part of the <em>UI</em> to keep the feature simple and intuitive. To manipulate the actual web page, we will need to access the <em>renderer</em> to change how the page is actually drawn. We will not need to change anything with the site, we will only need to change the way it is presented to the user.  </p>
+<p><em>Figure 18: Reader mode on Microsoft Edge</em>
+<img alt="Fig18" src="../img/a2/fig18.png" /></p>
+<h2 id="team-issues">Team Issues</h2>
+<p>The team ran into a few issues. Problems that came up during Chrome’s development caused the team to split into different sections unexpectedly, such as with the development of the <em>JavaScript Interpreter</em>, V8. A separate team worked on engine to get it working faster than any other <em>JavaScript interpreter</em>.  </p>
+<p>Chrome has become such a large project that it can be hard for someone new to the team to get a grasp of how everything works, and this can take time until they are just as efficient as the other developers.  </p>
+<h2 id="lessons-learned">Lessons Learned</h2>
+<p>Through our research, our team has learned how to read and understand large codebases. The Chromium repository is incredibly large and difficult to look through; learning what each directory and file does is not a trivial undertaking. While we sifted through the behemoth that is called Chromium, we discovered many ways to help us navigate and learn the functions of the pieces. We found it incredibly helpful to utilize Understand and its graphing capabilities. This tool, used correctly, could show us how all of the parts of program connected. It created a web of files and directories that we could use to understand the layout of the components. When we started digging further, we needed to learn more about what each directory’s function was. We quickly found the <code>README</code>s located in most folders would give us a good idea of what we were looking at. <code>README</code>s are small text files that the developers leave for newcomers (or even veteran developers that have forgotten the meaning of a component) so that they may quickly learn the use of the individual parts.  </p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Google’s Chromium web browser proved to be a tough nut to crack; however, in the end, we were able to manage. We maintained our conceptual architecture and continued to use it as we delved into the concrete architecture analysis. We used many additional resources, such as Understand, <code>README</code>s, and official documentation. Along the way we came up with a new feature that we believe would enhance Chrome and remove any shortcomings compared to other browsers: A Reader Mode. We now have a much better grasp of how Chromium works. With a good foundation that focused on speed, simplicity, security, and stability, Google’s Chrome has been able to become a reliable browser to many people.  </p>
+<h2 id="references">References</h2>
+<p><a href="https://scitools.com">Understand Software</a><br />
+<a href="https://github.com/chromium/chromium">Chromium Github</a><br />
+<a href="https://www.chromium.org/">Chromium Projects</a>  </p>
+<h2 id="glossary">Glossary</h2>
+<ul>
+<li><strong>UI</strong> - abbreviation for <em>User Interface</em></li>
+<li><strong><code>README</code></strong> - a short text file found in source code directories explaining the purpose and contents of the directory</li>
+<li><strong>Understand</strong> - the tool by SciTools used to analyse the Chromium source code for the generation of the concrete architecture</li>
+</ul></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"search": 83, "next": 78, "help": 191, "previous": 80};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
